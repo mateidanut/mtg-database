@@ -17,14 +17,15 @@ config = {
 admin_config = {
     'user': 'root',
     'password': 'root',
-    'host': 'localhost',
+    'host': 'db',
+    'port': '3306',
     'database': 'mtg',
     'raise_on_warnings': True,
 }
 
 @app.route('/statistics/collection', methods=['GET'])
 def get_collection():
-    global config
+    global admin_config
     cnx = mysql.connector.connect(**admin_config)
     cursor = cnx.cursor()
 
@@ -54,7 +55,7 @@ def get_collection():
 
 @app.route('/statistics/decks', methods=['GET'])
 def get_decks():
-    global config
+    global admin_config
     cnx = mysql.connector.connect(**admin_config)
     cursor = cnx.cursor()
 
@@ -98,7 +99,7 @@ def get_decks():
 
 @app.route('/random', methods=['GET'])
 def get_random():
-    global config
+    global admin_config
     cnx = mysql.connector.connect(**admin_config)
     cursor = cnx.cursor()
 
@@ -134,10 +135,10 @@ def get_pic(filename):
 
 @app.route('/card/<string:card_exp>/<int:card_no>', methods=['GET'])
 def get_card(card_exp, card_no):
-    global config
+    global admin_config
     cnx = mysql.connector.connect(**admin_config)
     cursor = cnx.cursor()
-    
+
     card_info = []
     try:
         # get some random cards from the db
@@ -162,13 +163,13 @@ def get_card(card_exp, card_no):
 
 @app.route('/buy/<string:card_exp>/<int:card_no>', methods=['GET'])
 def buy_card(card_exp, card_no):
-    global config
+    global admin_config
     cnx = mysql.connector.connect(**admin_config)
     cursor = cnx.cursor()
 
     print(card_exp)
     print(card_no)
-    
+
     card_info = []
     try:
         # get some random cards from the db
@@ -189,10 +190,10 @@ def buy_card(card_exp, card_no):
 
 @app.route('/buydeck/<int:deck_id>', methods=['GET'])
 def buy_deck(deck_id):
-    global config
+    global admin_config
     cnx = mysql.connector.connect(**admin_config)
     cursor = cnx.cursor()
-    
+
     card_info = []
     try:
         # get some random cards from the db

@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    volumes:
+        - "./db_init:/docker-entrypoint-initdb.d"
+    restart: always
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mtg
+
+  backend:
+    depends_on:
+        - db
+    build: ./backend-app
+    image: mateidanut/idp/backend:1.0
+    tty: true
+    stdin_open: true
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+
+volumes:
+    db_init:
