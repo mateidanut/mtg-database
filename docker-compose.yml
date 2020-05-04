@@ -2,9 +2,7 @@ version: '3'
 
 services:
   db:
-    image: mysql
-    volumes:
-        - "./db_init:/docker-entrypoint-initdb.d"
+    image: mateidanut/mtg-db-docker:db
     restart: always
     ports:
       - "32000:3306"
@@ -15,14 +13,20 @@ services:
   backend:
     depends_on:
         - db
-    build: ./backend-app
-    image: mateidanut/idp/backend:1.0
+    image: mateidanut/mtg-db-docker:backend
     tty: true
     stdin_open: true
     ports:
       - "5000:5000"
     environment:
       - FLASK_ENV=development
+
+  frontend:
+    depends_on:
+        - backend
+    image: mateidanut/mtg-db-docker:frontend
+    ports:
+      - "8080:80"
 
 volumes:
     db_init:
