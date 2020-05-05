@@ -129,6 +129,7 @@ def get_random():
 
 
 @app.route('/pics/<string:filename>', methods=['GET'])
+@metrics.do_not_track()
 def get_pic(filename):
     try:
         return send_file('./pics/' + filename)
@@ -137,6 +138,7 @@ def get_pic(filename):
 
 
 @app.route('/card/<string:card_exp>/<int:card_no>', methods=['GET'])
+@metrics.do_not_track()
 def get_card(card_exp, card_no):
     global admin_config
     cnx = mysql.connector.connect(**admin_config)
@@ -165,6 +167,7 @@ def get_card(card_exp, card_no):
 
 
 @app.route('/buy/<string:card_exp>/<int:card_no>', methods=['GET'])
+@metrics.do_not_track()
 def buy_card(card_exp, card_no):
     global admin_config
     cnx = mysql.connector.connect(**admin_config)
