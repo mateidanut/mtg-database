@@ -13,7 +13,10 @@ services:
   backend:
     depends_on:
         - db
-    image: mateidanut/mtg-db-docker:backend
+          #image: mateidanut/mtg-db-docker:backend
+    build: ./backend-app
+    ports:
+      - "5000:5000"
     tty: true
     stdin_open: true
     environment:
@@ -22,9 +25,12 @@ services:
   frontend:
     depends_on:
         - backend
-    image: mateidanut/mtg-db-docker:frontend
+          #image: mateidanut/mtg-db-docker:frontend
+    build: ./frontend-app
     ports:
-      - "80:80"
+      - "80:3000"
+    tty: true
+    stdin_open: true
 
 volumes:
     db_init:
