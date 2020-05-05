@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify, send_file
 from copy import deepcopy
+from prometheus_flask_exporter import PrometheusMetrics
 import mysql.connector
 import uuid
 import heapq
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+metrics.info('mtg_database', 'Magic the Gathering Card Database')
 
 config = {
     'user': 'client',
@@ -215,4 +218,4 @@ def buy_deck(deck_id):
 
 
 if __name__ == '__main__':
-    app.run('localhost', debug=True)
+    app.run('localhost', debug=False)
