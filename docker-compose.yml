@@ -27,19 +27,18 @@ services:
     image: mateidanut/mtg-db-docker:frontend
     ports:
       - "80:3000"
-    tty: true
-    stdin_open: true
+        #tty: true
+        #stdin_open: true
 
   prometheus:
-    build: ./prometheus
-      #image: prom/prometheus:v2.2.1
+    image: mateidanut/mtg-db-docker:prometheus
       #volumes:
       #- ./prometheus/config.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
 
   grafana:
-    build: ./grafana
+    image: mateidanut/mtg-db-docker:grafana
     #volumes:
         #- ./grafana/config.ini:/etc/grafana/grafana.ini
         #- ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/default.yaml
